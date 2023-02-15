@@ -1,7 +1,10 @@
+package bullsandcows;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        /*
         Scanner sc = new Scanner(System.in);
 
         boolean win = false;
@@ -37,9 +40,10 @@ public class Main {
             System.out.printf("Grade: %d bull(s) and %d cow(s). The secret code is %s.\n", bulls, cows, num);
             }
 
-        }
+        } */
 
 
+        System.out.printf("The random secret number is %s.\n", Util.randomCode());
 
     }
 }
