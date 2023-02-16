@@ -1,8 +1,31 @@
 package bullsandcows;
 
 
-public class Main {
+import java.util.Scanner;
+
+public class Main extends Util {
     public static void main(String[] args) {
-        Util.gameInit();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Please, enter the secret code's length:");
+        System.out.print("> ");
+        int size = sc.nextInt();
+
+        System.out.println("Input the number of possible symbols in the code:");
+        System.out.print("> ");
+        int nSymbols = sc.nextInt();
+
+
+
+        while (size <= 0 || size >= 36) {
+            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.");
+            size = sc.nextInt();
+            System.out.println("> ");
+
+        }
+
+        String secretCode = randomCode(size, nSymbols);
+        gameInit(secretCode, nSymbols);
+
     }
 }

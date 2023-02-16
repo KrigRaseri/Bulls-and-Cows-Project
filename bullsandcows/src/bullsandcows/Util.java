@@ -3,49 +3,62 @@ package bullsandcows;
 import java.util.*;
 
 public class Util {
-    public static String randomCode() {
-        Random rand = new Random();
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("Please, enter the secret code's length:");
-        System.out.print("> ");
-        int size = sc.nextInt();
+    public static String printInfo(String code, int nSymbols) {
+        String range = "0123456789abcdefghijklmnopqrstuvwxyz";
+        String stars = code.replaceAll("(?s).", "*");
+        char letter;
+        String section = "";
 
-        while (size <= 0 || size >= 11) {
-            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.");
-            size = sc.nextInt();
-            System.out.println("> ");
-
+        if (nSymbols == 11) {
+            section = "(0-9, a)";
+        } else if (nSymbols > 11) {
+            letter = range.charAt(nSymbols - 1);
+            section = String.format("(0-9, a-%c)", letter);
+        } else {
+            section = "(0-9)";
         }
+
+        return String.format("%s (0-9, a-f).", stars, section);
+
+
+    }
+
+
+    public static String randomCode(int size, int nSymbols) {
+        Random rand = new Random();
 
         String code = "";
-        LinkedHashSet<Integer> set = new LinkedHashSet<>();
+        LinkedHashSet<Character> set = new LinkedHashSet<>();
+        String range = "0123456789abcdefghijklmnopqrstuvwxyz";
 
         while (set.size() < size) {
-            if (set.isEmpty()) {
-                set.add(((int) (Math.random()*(10 - 1)) + 1));
+            if (nSymbols <= 10) {
+                set.add((char)rand.nextInt(10));
+
+            } else {
+
+                set.add(range.charAt(rand.nextInt(36)));
             }
 
-            else {
-                set.add(rand.nextInt(10));}
         }
 
-        for (Integer integer : set) {
-            code += integer.toString();
+        for (Character c : set) {
+            code += c.toString();
         }
 
-
+        System.out.println(code);
         return code;
     }
 
 
 
-    public static void gameInit() {
+    public static void gameInit(String code, int nSymbol) {
         Scanner sc = new Scanner(System.in);
 
         boolean win = false;
-        String num = Util.randomCode();
         int turns = 1;
+        System.out.printf("The secret is prepared: %s\n", printInfo(code, nSymbol));
         System.out.println("Okay, let's start a game!");
 
 
@@ -60,18 +73,18 @@ public class Util {
 
 
             for (int i = 0; i < inp.length(); i++) {
-                if (inp.charAt(i) == num.charAt(i)) {
+                if (inp.charAt(i) == code.charAt(i)) {
                     bulls++;
                 }
 
-                if (inp.charAt(i) != num.charAt(i) && num.indexOf(inp.charAt(i)) >= 0) {
+                if (inp.charAt(i) != code.charAt(i) && code.indexOf(inp.charAt(i)) >= 0) {
                     cows++;
                 }
             }
 
 
 
-            if (bulls == num.length()) {
+            if (bulls == code.length()) {
                 System.out.printf("Grade: %d bulls\n", bulls);
                 System.out.println("Congratulations! You guessed the secret code.");
                 break;
