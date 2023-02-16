@@ -18,7 +18,7 @@ public class Main extends Util {
 
 
         while (size <= 0 || size >= 36) {
-            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.");
+            System.out.println("Error: input incorrect.");
             size = sc.nextInt();
             System.out.println("> ");
 

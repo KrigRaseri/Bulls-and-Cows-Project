@@ -3,6 +3,33 @@ package bullsandcows;
 import java.util.*;
 
 public class Util {
+    public static int sizeCheck(int size) {
+        Scanner sc = new Scanner(System.in);
+        int cSize = size;
+
+        while (cSize <= 0 || cSize >= 36) {
+            System.out.println("Error: input incorrect.");
+            cSize = sc.nextInt();
+            System.out.println("> ");
+        }
+
+        return cSize;
+    }
+
+
+    public static int symbolCheck(int nSymbol) {
+        Scanner sc = new Scanner(System.in);
+        int cSym = nSymbol;
+
+        while (cSym <= 0 || cSym >= 36) {
+            System.out.println("Error: input incorrect.");
+            cSym = sc.nextInt();
+            System.out.println("> ");
+        }
+
+        return cSym;
+    }
+
 
     public static String printInfo(String code, int nSymbols) {
         String range = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -19,7 +46,7 @@ public class Util {
             section = "(0-9)";
         }
 
-        return String.format("%s (0-9, a-f).", stars, section);
+        return String.format("%s %s.", stars, section);
 
 
     }
@@ -34,7 +61,8 @@ public class Util {
 
         while (set.size() < size) {
             if (nSymbols <= 10) {
-                set.add((char)rand.nextInt(10));
+                String c = String.valueOf(rand.nextInt(10));
+                set.add(c.charAt(0));
 
             } else {
 
@@ -55,13 +83,9 @@ public class Util {
 
     public static void gameInit(String code, int nSymbol) {
         Scanner sc = new Scanner(System.in);
-
-        boolean win = false;
         int turns = 1;
         System.out.printf("The secret is prepared: %s\n", printInfo(code, nSymbol));
         System.out.println("Okay, let's start a game!");
-
-
 
         while (true) {
             System.out.println("Turn " + turns);
