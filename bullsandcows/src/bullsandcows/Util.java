@@ -9,12 +9,18 @@ public class Util {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please, enter the secret code's length:");
         System.out.print("> ");
-        int size = sc.nextInt();
+        int size = 0;
 
-        while (size <= 0 || size > 36) {
-            System.out.println("Error: input incorrect, try again.");
-            System.out.print("> ");
+        try {
             size = sc.nextInt();
+
+            if (size <= 0 || size > 36) {
+                System.out.println("Error: input incorrect, try again.");
+                System.exit(1);
+            }
+        } catch (InputMismatchException e) {
+            System.out.printf("Error: %s isn't a valid number.", size);
+            System.exit(1);
         }
 
         return size;
@@ -29,7 +35,7 @@ public class Util {
         int nSymbols = sc.nextInt();
 
         while (nSymbols <= 0 || nSymbols > 36) {
-            System.out.println("Error: input incorrect, try again.");
+            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
             System.out.print("> ");
             nSymbols = sc.nextInt();
         }
